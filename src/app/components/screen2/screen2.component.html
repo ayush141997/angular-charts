@@ -1,1 +1,21 @@
-<p>screen2 works!</p>
+<div id="charts">
+        <google-chart
+            [title]="title" 
+            [type]="typeLine" 
+            [data]="dataChart" 
+            [columnNames]="columnNames"
+            [options]="options" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+        
+        <google-chart 
+            [title]="title" 
+            [type]="typeArea" 
+            [data]="dataChart" 
+            [columnNames]="columnNames"
+            [options]="options" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+</div>
