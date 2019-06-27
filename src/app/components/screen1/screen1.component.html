@@ -1,0 +1,50 @@
+<form (submit)="addData($event)">
+    <input type="number" name="year" placeholder="year">
+    <input type="number" name="sales" placeholder="sales">
+    <input type="number" name="expense" placeholder="expense">
+    <input type="submit" value="Submit">
+</form>
+<div id="charts">
+    <div>
+        <google-chart
+            [title]="titlePie" 
+            [type]="typePie" 
+            [data]="dataPie" 
+            [columnNames]="columnNamesPie"
+            [options]="options" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+        
+        <google-chart 
+            [title]="titleDonut" 
+            [type]="typePie" 
+            [data]="dataDonut" 
+            [columnNames]="columnNamesDonut"
+            [options]="optionsDonut" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+    </div>
+    <div>
+        <google-chart 
+            [title]="titleColumn" 
+            [type]="typeColumn" 
+            [data]="dataChart" 
+            [columnNames]="columnNames"
+            [options]="options" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+
+        <google-chart 
+            [title]="titleBar" 
+            [type]="typeBar" 
+            [data]="dataChart" 
+            [columnNames]="columnNames"
+            [options]="options" 
+            [width]="width" 
+            [height]="height">
+        </google-chart>
+    </div>
+</div>
