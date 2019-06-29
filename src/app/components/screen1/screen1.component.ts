@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Screen1Service } from '../../services/screen1.service'
 import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 interface response {
   data: any[]
@@ -13,6 +14,7 @@ interface response {
 })
 export class Screen1Component implements OnInit {
 
+  addForm: FormGroup
   data: any[]
   columnNames: string[] = []
   columnNamesPie: string[] = []
@@ -20,14 +22,16 @@ export class Screen1Component implements OnInit {
   dataDonut: any[] = []
   dataChart: any[] = []
   dataPie: any[] = []
+  disable: boolean = true
   subscription: Subscription
 
-  constructor(private _serv: Screen1Service) {
+  constructor(private _serv: Screen1Service, private _formBuilder: FormBuilder) {
     this.subscription = _serv.getData().subscribe((res: response) => {
       this.data = res.data
       this.formatColumns(this.data)
       this.formatData(this.data)
     })
+    this.initializeForm()
   }
 
   ngOnInit() {
@@ -60,6 +64,9 @@ export class Screen1Component implements OnInit {
   width = 550;
   height = 400;
 
+  /* To format the data and fetch the column names
+  @Param data (Object[]): the data from the json 
+  */
   formatColumns(data): void {
     this.columnNames[0] = Object.keys(data[0].data[0])[0]
     data.map(e => this.columnNames.push(e.category))
@@ -71,6 +78,9 @@ export class Screen1Component implements OnInit {
     this.columnNamesDonut = Object.assign([], columnDonutTemp)
   }
 
+  /* To format the data according to data format acceptable by chart library
+  @Param data (Object[]): the data from the json 
+  */
   formatData(data) {
     let dataTemp: any[] = []
     dataTemp = data.map(el => el.data)
@@ -84,6 +94,9 @@ export class Screen1Component implements OnInit {
     }
   }
 
+  /* To format the data according to different charts
+  @Param data (Object[]): the data from the json 
+  */
   formatChartData(temp) {
     this.dataChart.push(temp)
     const temp1 = Object.assign([], temp)
@@ -97,6 +110,9 @@ export class Screen1Component implements OnInit {
     this.dataDonut = [...this.dataDonut]
   }
 
+  /* To add data
+  @Param e : event
+  */
   addData(e) {
     e.preventDefault()
     const target = e.target
@@ -110,5 +126,24 @@ export class Screen1Component implements OnInit {
     ]
     this.formatChartData(temp)
     target.reset()
+  }
+
+  /* Initialize the form and creates the form group */
+  initializeForm() : void{
+    this.addForm = this._formBuilder.group({
+      year : new FormControl(null,[
+                                    Validators.required, 
+                                    Validators.max(9999),
+                                    Validators.min(1000)
+                                  ]
+                            ),
+      sales : new FormControl(null,[Validators.required]),
+      expense : new FormControl(null,[Validators.required])
+    })
+  }
+
+  /* Checks and toggle the ability and disability */
+  checkForm(){
+    this.disable = !this.addForm.valid
   }
 }

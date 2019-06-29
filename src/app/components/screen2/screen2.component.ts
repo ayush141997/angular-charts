@@ -24,7 +24,10 @@ export class Screen2Component implements OnInit {
       this.formatColumns(this.data)
       this.formatData(this.data)
     })
+
     let year = 2018
+
+    //Logic for updating the data randomly in every 10seconds
     setInterval(() => {
       year += 1
       let minSales = Math.min(...this.data[0].data.map(e => e.value)) 
@@ -54,11 +57,17 @@ export class Screen2Component implements OnInit {
   width = 550;
   height = 400;
 
+  /* To format the data and fetch the column names
+  @Param data (Object[]): the data from the json 
+  */
   formatColumns(data): void {
     this.columnNames[0] = Object.keys(data[0].data[0])[0]
     data.map(e => this.columnNames.push(e.category))
   }
 
+  /* To format the data according to data format acceptable by chart library
+  @Param data (Object[]): the data from the json 
+  */
   formatData(data) {
     let dataTemp: any[] = []
     dataTemp = data.map(el => el.data)
@@ -72,11 +81,17 @@ export class Screen2Component implements OnInit {
     }
   }
 
+  /* To format the data according to different charts
+  @Param data (Object[]): the data from the json 
+  */
   formatChartData(temp) {
     this.dataChart.push(temp)
     this.dataChart = [...this.dataChart]
   }
 
+  /* To add data
+  @Param e : event
+  */
   addData(year, sales, expense) {
     let temp = [
       year.toString(),

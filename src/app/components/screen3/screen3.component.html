@@ -1,2 +1,69 @@
-<input type="text" id="analyser" (input)="calculate($event.target.value)">
+<div class="row"></div>
+<div class="row">
+    <!-- Word Count -->
+    <div class="col s4 m4">
+        <div class="card grey darken-1">
+            <div class="center card-content white-text">
+                <span class="card-title">Word Count</span>
+                <span id="counts">{{ out.wordCount }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- Input -->
+    <div class="col s4 m4">
+        <div class="card grey darken-3">
+            <div class="card-content" id="inputCard">
+                <div>
+                    <span>
+                        <h5 class="white-text">Let's Analyze</h5>
+                    </span>
+                </div>
+                <div class="input-field">
+                    <input id="analyser" (keyup)="calculate($event.target.value)" type="text"
+                        class="validate white-text">
+                    <label class="active" for="analyser">Enter text to analyze</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Article Count -->
+    <div class="col s4 m4">
+        <div class="card grey darken-1">
+            <div class="center card-content white-text">
+                <span class="card-title">Article Count</span>
+                <span id="counts">{{ out.articleCount }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- Vowel Count -->
+    <div class="col s4 m4">
+        <div class="card grey darken-1">
+            <div class="center card-content white-text">
+                <span class="card-title">Vowel Count</span>
+                <span id="counts">{{ out.vowelCount }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- Max Word Length -->
+    <div class="col s4 m4">
+        <div class="card grey darken-1">
+            <div class="center card-content white-text">
+                <span class="card-title">Max. Word Length</span>
+                <span id="counts">{{ out.maxWordLength }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- Min Word Length -->
+    <div class="col s4 m4">
+        <div class="card grey darken-1">
+            <div class="center card-content white-text">
+                <span class="card-title">Min. Word Length</span>
+                <span id="counts">{{ out.minWordLength }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{out|json}}

@@ -8,14 +8,17 @@ import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GoogleChartsModule } from 'angular-google-charts';
 import { Screen2Component } from './components/screen2/screen2.component';
-import { Screen3Component } from './components/screen3/screen3.component'
+import { Screen3Component } from './components/screen3/screen3.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home/home.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     Screen1Component,
     Screen2Component,
-    Screen3Component
+    Screen3Component,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import { Screen3Component } from './components/screen3/screen3.component'
     NgxChartsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

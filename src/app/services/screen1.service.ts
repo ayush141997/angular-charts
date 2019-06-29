@@ -10,6 +10,7 @@ export class Screen1Service {
 
   url : string = '../../assets/data.json'
 
+  /* To get data from json */
   getData(){
     return this._http.get(this.url)
   }

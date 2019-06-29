@@ -1,0 +1,10 @@
+.welcomeRow{
+    display: flex;
+    height: 87vh;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.card {
+    box-shadow: 0 0 20px grey;
+}

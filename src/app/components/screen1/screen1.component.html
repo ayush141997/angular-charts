@@ -1,50 +1,56 @@
-<form (submit)="addData($event)">
-    <input type="number" name="year" placeholder="year">
-    <input type="number" name="sales" placeholder="sales">
-    <input type="number" name="expense" placeholder="expense">
-    <input type="submit" value="Submit">
+<div class="row"></div>
+<!-- Add Form -->
+<form [formGroup]="addForm" (submit)="addData($event)">
+    <div class="row">
+        <div class="col s1 m1"></div>
+        <div class="input-field col s3 m3">
+            <input id="year" type="number" name="year" formControlName = 'year' class="validate"
+             (keyup)="checkForm()" min="1000" max="9999" required>
+            <label for="year">Year</label>
+        </div>
+        <div class="input-field col s3 m3">
+            <input type="number" name="sales" id="sales"  formControlName = 'sales' class="validate"
+             (keyup)="checkForm()" required>
+            <label for="sales">Sales</label>
+        </div>
+        <div class="input-field col s3 m3">
+            <input type="number" name="expense" id="expense"  formControlName = 'expense' class="validate"
+             (keyup)="checkForm()" required>
+            <label for="expense">Expense</label>
+        </div>
+        <button class="btn waves-effect waves-light submit deep-orange lighten-2" type="submit" name="action"
+         [disabled]="disable">
+            <i class="material-icons right">add</i>Add
+        </button>
+    </div>
 </form>
 <div id="charts">
     <div>
-        <google-chart
-            [title]="titlePie" 
-            [type]="typePie" 
-            [data]="dataPie" 
-            [columnNames]="columnNamesPie"
-            [options]="options" 
-            [width]="width" 
-            [height]="height">
-        </google-chart>
-        
+        <!-- Pie Chart -->
         <google-chart 
-            [title]="titleDonut" 
-            [type]="typePie" 
-            [data]="dataDonut" 
-            [columnNames]="columnNamesDonut"
-            [options]="optionsDonut" 
-            [width]="width" 
-            [height]="height">
+        [title]="titlePie" 
+        [type]="typePie" 
+        [data]="dataPie" 
+        [columnNames]="columnNamesPie"
+        [options]="options" 
+        [width]="width" 
+        [height]="height">
+        </google-chart>
+
+        <!-- Donut Chart -->
+        <google-chart [title]="titleDonut" [type]="typePie" [data]="dataDonut" [columnNames]="columnNamesDonut"
+            [options]="optionsDonut" [width]="width" [height]="height">
         </google-chart>
     </div>
     <div>
-        <google-chart 
-            [title]="titleColumn" 
-            [type]="typeColumn" 
-            [data]="dataChart" 
-            [columnNames]="columnNames"
-            [options]="options" 
-            [width]="width" 
-            [height]="height">
+        <!-- Column Chart -->
+        <google-chart [title]="titleColumn" [type]="typeColumn" [data]="dataChart" [columnNames]="columnNames"
+            [options]="options" [width]="width" [height]="height">
         </google-chart>
 
-        <google-chart 
-            [title]="titleBar" 
-            [type]="typeBar" 
-            [data]="dataChart" 
-            [columnNames]="columnNames"
-            [options]="options" 
-            [width]="width" 
-            [height]="height">
+        <!-- Bar Chart -->
+        <google-chart [title]="titleBar" [type]="typeBar" [data]="dataChart" [columnNames]="columnNames"
+            [options]="options" [width]="width" [height]="height">
         </google-chart>
     </div>
 </div>

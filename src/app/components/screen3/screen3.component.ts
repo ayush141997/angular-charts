@@ -7,16 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Screen3Component implements OnInit {
 
-  constructor() { }
+  constructor() {
+      this.out['wordCount'] = 0,
+      this.out['articleCount'] = 0,
+      this.out['vowelCount'] = 0,
+      this.out['maxWordLength'] = 0,
+      this.out['minWordLength'] = 0
+  }
 
   ngOnInit() {
   }
 
   out: object = {}
-  calculate(text) {
 
-    Promise.all([this.countWords(text), this.countArticles(text), this.countVowels(text),
-       this.getMaxLength(text), this.getMinLength(text)])
+  /* To analyze the data
+  @Param text: input text to analyze
+  */
+  calculate(text) {
+    Promise.all([this.countWords(text),this.countArticles(text), this.countVowels(text),
+      this.getMaxLength(text), this.getMinLength(text)])
       .then(d => {
           this.out['wordCount'] = d[0],
           this.out['articleCount'] = d[1],
@@ -29,63 +38,111 @@ export class Screen3Component implements OnInit {
       })
   }
 
+  /* To count the words
+  @Param text: input text to analyze
+  
+  @return count: Count of words
+  */
   async countWords(text: string): Promise<number> {
     let count = 0
-    if (text !== "") {
-      count = await text.split(/\/| |,/).length
+    if (text) {
+      count = await text.split(/\/| |,/).filter(word => word!='').length
     }
     return count
   }
 
+  /* To count the articles
+  @Param text: input text to analyze
+  
+  @return count: Count of articles
+  */
   async countArticles(text): Promise<number> {
-    let temp1: string[] = await text.split(/\/| |,/).filter(e => {
-      const articles = ['a', 'an', 'the']
-      e.toLowerCase()
-      return articles.includes(e)
-    })
-    return temp1.length
+    let count:number = 0
+    if(text){
+      let temp1: string[] = await text.split(/\/| |,/).filter(word => word!='').filter(e => {
+        const articles = ['a', 'an', 'the']
+        e.toLowerCase()
+        return articles.includes(e)
+      })
+      count = temp1.length
+    }
+    return count
   }
 
+  /* To get the words array excluding the articles
+  @Param text: input text to analyze
+  
+  @return count: array of words without articles
+  */
   async getWordsWithoutArticles(text): Promise<string[]> {
-    return await text.split(/\/| |,/).filter(e => {
+    return await text.split(/\/| |,/).filter(word => word!='').filter(e => {
       const articles = ['a', 'an', 'the']
       e.toLowerCase()
       return !articles.includes(e)
     })
   }
 
+  /* To count the vowels
+  @Param text: input text to analyze
+  
+  @return count: Count of vowels
+  */
   async countVowels(text): Promise<number> {
     let vowelCount: number = 0
-    const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
-    wordsWithoutArticles.forEach(e => {
-      vowelCount += e.split("").filter(char => {
-        const vowels = ['a', 'e', 'i', 'o', 'u']
-        char.toLowerCase()
-        return vowels.includes(char)
-      }).length
-    })
+    if(text){
+      const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
+      if(wordsWithoutArticles.length != 0){
+        wordsWithoutArticles.forEach(e => {
+          vowelCount += e.split("").filter(char => {
+            const vowels = ['a', 'e', 'i', 'o', 'u']
+            char.toLowerCase()
+            return vowels.includes(char)
+          }).length
+        })
+      }
+    }
     return vowelCount
   }
 
+  /* To get the max word length
+  @Param text: input text to analyze
+  
+  @return count: max count
+  */
   async getMaxLength(text): Promise<number> {
     let maxLength: number = 0
-    const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
-    wordsWithoutArticles.forEach(word => {
-      if (word.length > maxLength) {
-        maxLength = word.length
+    if(text){
+      const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
+      if(wordsWithoutArticles.length != 0){
+        wordsWithoutArticles.forEach(word => {
+          if (word.length > maxLength) {
+            maxLength = word.length
+          }
+        })
       }
-    })
+    }
     return maxLength
   }
 
+  /* To get the min word length
+  @Param text: input text to analyze
+  
+  @return count: min count
+  */
   async getMinLength(text): Promise<number> {
-    const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
-    let minLength: number = wordsWithoutArticles[0].length
-    wordsWithoutArticles.forEach(word => {
-      if (word.length < minLength) {
-        minLength = word.length
+    let minLength: number = 0
+    if(text){
+      const wordsWithoutArticles = await this.getWordsWithoutArticles(text)
+      if(wordsWithoutArticles.length != 0){
+        console.log(wordsWithoutArticles)
+        minLength = wordsWithoutArticles[0].length
+        wordsWithoutArticles.forEach(word => {
+          if (word.length < minLength) {
+            minLength = word.length
+          }
+        })
       }
-    })
+    }
     return minLength
   }
 }
